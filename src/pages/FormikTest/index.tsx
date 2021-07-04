@@ -1,7 +1,9 @@
 import React, { ReactElement } from 'react';
+import * as Yup from 'yup';
+import Utils from '../../components/Form/utils';
 
 // types
-import { InitialValues, OnSubmit } from '../../components/Form/types';
+import { Values, OnSubmit } from '../../components/Form/types';
 
 // components
 import Form from '../../components/Form';
@@ -9,17 +11,23 @@ import Form from '../../components/Form';
 type FieldType = {
   name: string;
   initialValue: string;
+  validationSchema: any;
 };
 
-const INPUT_QUANTITY = 100;
+const INPUT_QUANTITY = 3;
 
 export default function FormikTest(): ReactElement {
+  // dummy fields
   const arr: FieldType[] = Array(INPUT_QUANTITY)
     .fill('')
-    .map((_, index) => ({ name: `Input-No${index}`, initialValue: '' }));
+    .map((_, index) => ({ name: `Input-No${index}`, initialValue: '', validationSchema: Yup.string().required() }));
 
-  const initialValues: InitialValues = arr.reduce((acc, item) => {
+  const initialValues: Values = arr.reduce((acc, item) => {
     return { ...acc, [item.name]: item.initialValue };
+  }, {});
+
+  const validationSchema = arr.reduce((acc, item) => {
+    return { ...acc, [item.name]: item.validationSchema };
   }, {});
 
   const onSubmit: OnSubmit = (values, actions) => {
@@ -29,13 +37,24 @@ export default function FormikTest(): ReactElement {
     actions.setSubmitting(false);
   };
 
+  const options = [
+    { value: 1, label: 'Red' },
+    { value: 2, label: 'Blue' },
+    { value: 3, label: 'Green' },
+  ];
+
   return (
-    <div>
-      <Form initialValues={initialValues} onSubmit={onSubmit}>
+    <div style={{ background: 'lightgreen' }}>
+      <Form
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        validationSchema={Utils.getValidationSchema(validationSchema)}
+      >
         <button type="submit">Submit</button>
         {arr.map((item) => (
-          <Form.Input key={item.name} fieldName={item.name} />
+          <Form.Input type={Form.Input.InputType.Text} key={item.name} fieldName={item.name} />
         ))}
+        <Form.Select fieldName="helloSelect" options={options} />
       </Form>
     </div>
   );

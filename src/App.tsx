@@ -10,35 +10,33 @@ function App(): ReactElement {
   return (
     <div style={{ width: '100vw', height: '100vh', background: 'lightgrey', overflow: 'scroll' }}>
       <Router>
-        <div>
-          <nav>
-            <ul style={{ margin: 0 }}>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/FormikTest">FormikTest</Link>
-              </li>
-              <li>
-                <Link to="/RHFTest">RHFTest</Link>
-              </li>
-            </ul>
-          </nav>
+        <nav>
+          <ul style={{ margin: 0, display: 'flex' }}>
+            <li style={{ listStyle: 'none', margin: 10 }}>
+              <Link to="/">Home</Link>
+            </li>
+            <li style={{ listStyle: 'none', margin: 10 }}>
+              <Link to="/FormikTest">FormikTest</Link>
+            </li>
+            <li style={{ listStyle: 'none', margin: 10 }}>
+              <Link to="/RHFTest">RHFTest</Link>
+            </li>
+          </ul>
+        </nav>
 
-          {/* A <Switch> looks through its children <Route>s and
+        {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-          <Switch>
-            <Route path="/FormikTest">
-              <FormikTest />
-            </Route>
-            <Route path="/RHFTest">
-              <RHFTest />
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
-          </Switch>
-        </div>
+        <Switch>
+          <Route path="/FormikTest">
+            <FormikTest />
+          </Route>
+          <Route path="/RHFTest">
+            <RHFTest />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
       </Router>
     </div>
   );

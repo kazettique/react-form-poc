@@ -2,13 +2,24 @@ import React, { ChangeEvent, ReactElement } from 'react';
 import { useFormikContext, useField } from 'formik';
 import ErrorMessage from '../ErrorMessage';
 
+enum InputType {
+  Text = 'text',
+  Password = 'password',
+  Number = 'number',
+  File = 'file',
+  Email = 'email',
+  Color = 'color',
+}
+
 interface Props {
   fieldName: string;
   // onChange?: any;
+  placeholder?: string;
+  type?: InputType;
 }
 
-export default function Input(props: Props): ReactElement {
-  const { fieldName: name } = props;
+function Input(props: Props): ReactElement {
+  const { fieldName: name, placeholder, type = InputType.Text } = props;
 
   const [field] = useField(name);
   const { setFieldValue } = useFormikContext();
@@ -28,8 +39,12 @@ export default function Input(props: Props): ReactElement {
       <label htmlFor={name} style={{ marginRight: 10 }}>
         {name}
       </label>
-      <input id={name} type="text" name={name} onChange={onChange} value={field.value} />
+      <input id={name} type={type} name={name} onChange={onChange} value={field.value} placeholder={placeholder} />
       <ErrorMessage fieldName={name} />
     </div>
   );
 }
+
+Input.InputType = InputType;
+
+export default Input;
