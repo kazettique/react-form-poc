@@ -8,6 +8,9 @@ import * as Types from './types';
 import Input from './Input';
 import Select from './Select';
 
+// utils
+import Utils from './utils';
+
 interface Props {
   initialValues: Types.Values;
   onSubmit: Types.OnSubmit;
@@ -19,7 +22,11 @@ function Form(props: Props): ReactElement {
   const { initialValues, onSubmit, children, validationSchema } = props;
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      validationSchema={Utils.getValidationSchema(validationSchema)}
+    >
       <FormikForm>{children}</FormikForm>
     </Formik>
   );
