@@ -44,7 +44,7 @@ export default function FormikTest(): ReactElement {
   ];
 
   return (
-    <div style={{ background: 'lightgreen' }}>
+    <div style={{ background: 'lightgreen', height: '100%', width: '100%' }}>
       <Form
         initialValues={initialValues}
         onSubmit={onSubmit}
