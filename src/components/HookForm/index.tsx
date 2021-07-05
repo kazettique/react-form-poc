@@ -1,13 +1,41 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+
+// types
+import * as Types from './types';
 
 // components
 import Input from './Input';
 import Select from './Select';
 
-// interface Props {}
+// utils
+import Utils from './utils';
 
-function HookForm(): ReactElement {
-  return <div />;
+interface Props {
+  defaultValues: Types.Values;
+  onSubmit: Types.OnSubmit;
+  children: ReactNode;
+  validationSchema: any;
+}
+
+function HookForm(props: Props): ReactElement {
+  const { defaultValues, onSubmit, children, validationSchema } = props;
+
+  const methods = useForm<Types.Values>({
+    defaultValues,
+    resolver: yupResolver(Utils.getValidationSchema(validationSchema)),
+  });
+  const { handleSubmit } = methods;
+
+  const onHookFormSubmit = handleSubmit(onSubmit);
+
+  return (
+    <FormProvider {...methods}>
+      <form onSubmit={onHookFormSubmit}>{children}</form>
+    </FormProvider>
+  );
 }
 
 HookForm.Input = Input;

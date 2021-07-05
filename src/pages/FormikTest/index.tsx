@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import * as Yup from 'yup';
-import Utils from '../../components/Form/utils';
 
 // types
 import { Values, OnSubmit } from '../../components/Form/types';
@@ -32,7 +31,7 @@ export default function FormikTest(): ReactElement {
 
   const onSubmit: OnSubmit = (values, actions) => {
     actions.setSubmitting(true);
-    console.log(`submit values: `, values);
+    console.log(`formik submit: `, values);
 
     actions.setSubmitting(false);
   };
@@ -45,11 +44,7 @@ export default function FormikTest(): ReactElement {
 
   return (
     <div style={{ background: 'lightgreen', height: '100%', width: '100%' }}>
-      <Form
-        initialValues={initialValues}
-        onSubmit={onSubmit}
-        validationSchema={Utils.getValidationSchema(validationSchema)}
-      >
+      <Form initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
         <button type="submit">Submit</button>
         {arr.map((item) => (
           <Form.Input type={Form.Input.InputType.Text} key={item.name} fieldName={item.name} />
